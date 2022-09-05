@@ -2,6 +2,7 @@ package org.tech.town.logtest
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +13,7 @@ import org.threeten.bp.YearMonth
 import org.threeten.bp.format.DateTimeFormatter
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnItemListener {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -55,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         val dayList = dayInMonthArray(selectedDate)
 
         //어댑터 초기화
-        val adapter = CalendarAdapter(dayList)
+        val adapter = CalendarAdapter(dayList, this)
 
         //레이아웃 설정(열 7개)
         var manager: RecyclerView.LayoutManager = GridLayoutManager(applicationContext, 7)
@@ -76,6 +77,11 @@ class MainActivity : AppCompatActivity() {
         return date.format(formatter)
     }
 
+    private fun yearMonthFromDate(date: LocalDate): String{
+        var formatter = DateTimeFormatter.ofPattern("yyyy년 MM월")
+
+        return date.format(formatter)
+    }
 
     //날짜 생성
     private fun dayInMonthArray(date: LocalDate): ArrayList<String>{
@@ -103,4 +109,11 @@ class MainActivity : AppCompatActivity() {
 
         return dayList
     }
+
+    //아이템 클릭 이벤트
+    override fun onItemClick(dayText: String){
+        var yearMonthDay = yearMonthFromDate(selectedDate) + " " + dayText + "일"
+        Toast.makeText(this, yearMonthDay, Toast.LENGTH_SHORT).show()
+
+   }
 }
