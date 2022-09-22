@@ -1,5 +1,6 @@
 package org.tech.town.logtest
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -42,6 +43,12 @@ class MainActivity : AppCompatActivity(){
         binding.nextBtn.setOnClickListener {
             CalendarUtil.selectedDate = CalendarUtil.selectedDate.plusMonths(1)
             setMonthView()
+        }
+
+        binding.chartBtn.setOnClickListener{
+            val intent = Intent(this, ChartActivity::class.java)
+            startActivity(intent)
+
         }
     }
 
